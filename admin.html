@@ -495,6 +495,7 @@ function startApp(repoData){
   document.getElementById('st-stars').textContent = repoData.stargazers_count || 0;
   loadImages();
   loadRepoStats(repoData);
+  loadSettings();
   addLog('info', `تم الدخول إلى ${REPO}`);
 }
 
@@ -735,6 +736,26 @@ function toB64(file){
 // ══════════════════════════════════════
 //  SETTINGS
 // ══════════════════════════════════════
+async function loadSettings(){
+  try{
+    const r = await ghFetch('contents/config.json');
+    if(!r.ok) return;
+    const d = await r.json();
+    const cfg = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));
+    if(cfg.title)  document.getElementById('cfg-title').value  = cfg.title;
+    if(cfg.sub)    document.getElementById('cfg-sub').value    = cfg.sub;
+    if(cfg.folder) document.getElementById('cfg-folder').value = cfg.folder;
+    if(cfg.defaultColor){
+      document.getElementById('cfg-color').value    = cfg.defaultColor;
+      document.getElementById('cfg-colorHex').value = cfg.defaultColor;
+    }
+    if(cfg.announce) document.getElementById('cfg-announce').value = cfg.announce;
+    addLog('ok','تم تحميل الإعدادات من config.json');
+  }catch(e){
+    addLog('info','لا يوجد ملف إعدادات بعد — ستُنشأ عند الحفظ');
+  }
+}
+
 async function saveSettings(){
   const cfg = {
     title: document.getElementById('cfg-title').value,
@@ -755,10 +776,22 @@ async function saveSettings(){
       content,
       ...(sha?{sha}:{})
     });
-    if(r.ok){status.textContent='✅ تم الحفظ';addLog('ok','تم حفظ الإعدادات في config.json')}
-    else throw new Error('فشل');
-  }catch(e){status.textContent='❌ فشل الحفظ';addLog('err','فشل حفظ الإعدادات: '+e.message)}
-  setTimeout(()=>status.textContent='',3000);
+    if(r.ok){
+      status.textContent='✅ تم الحفظ';
+      status.style.color='#6ddf8a';
+      addLog('ok','تم حفظ الإعدادات في config.json');
+      toast('✅ تم حفظ الإعدادات!');
+    } else {
+      const errData = await r.json().catch(()=>({}));
+      throw new Error(errData.message||'HTTP '+r.status);
+    }
+  }catch(e){
+    status.textContent='❌ فشل: '+e.message;
+    status.style.color='#f08080';
+    addLog('err','فشل حفظ الإعدادات: '+e.message);
+    toast('❌ فشل الحفظ: '+e.message);
+  }
+  setTimeout(()=>{status.textContent='';status.style.color=''},4000);
 }
 
 // Color sync
@@ -801,7 +834,8 @@ function switchPane(i,el){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');
   document.querySelectorAll('.tab-pane').forEach((p,j)=>p.classList.toggle('on',j===i));
-  if(i===3) loadStats();
+  if(i===3) loadStats();   // Stats pane
+  if(i===0) loadImages();  // Refresh images on switch
 }
 
 // ══════════════════════════════════════
@@ -817,16 +851,29 @@ function toast(m){
 //  STATISTICS
 // ══════════════════════════════════════
 async function loadStats(){
+  // Show loading state
+  document.getElementById('sc-total').textContent = '...';
+  document.getElementById('sc-uploads').textContent = '...';
+  document.getElementById('sc-users').textContent = '...';
+  document.getElementById('sc-today').textContent = '...';
+  document.getElementById('topCards').innerHTML = '<div style="color:var(--mt);font-size:.78rem;text-align:center;padding:16px">جارٍ تحميل الإحصاءات...</div>';
+
   let data=[];
   // 1. Load from GitHub data/stats.json
   try{
     const r=await ghFetch('contents/data/stats.json');
     if(r.ok){
       const d=await r.json();
-      const raw=atob(d.content.replace(/\n/g,''));
-      data=JSON.parse(raw)||[];
+      // Decode properly — GitHub returns base64 with newlines
+      const decoded = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+      data = JSON.parse(decoded)||[];
+      addLog('ok','تم تحميل '+data.length+' سجل من GitHub');
+    } else if(r.status===404){
+      addLog('info','لا توجد إحصاءات في GitHub بعد');
     }
-  }catch{}
+  }catch(e){
+    addLog('err','خطأ في تحميل إحصاءات GitHub: '+e.message);
+  }
   // 2. Merge with localStorage (local browser stats)
   const local=JSON.parse(localStorage.getItem('jpf_stats')||'[]');
   // Merge and deduplicate by time
