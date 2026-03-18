@@ -2,181 +2,216 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>بطاقات عيد الفطر المبارك · JPF</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>بطاقات عيد الفطر · JPF</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+/* ══ Reset ══ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#07201c;--surf:rgba(12,42,36,.93);--surf2:rgba(8,28,24,.96);
-  --gold:#C9A84C;--gold-l:#F0D275;--gold-d:#7a5210;
-  --text:rgba(240,225,170,.9);--muted:rgba(240,225,170,.38);
-  --border:rgba(201,168,76,.16);--bh:rgba(201,168,76,.5);
-  --r:16px;--rs:10px
+  --bg:#07201c;--s1:rgba(12,42,36,.95);--s2:rgba(8,28,24,.98);
+  --gold:#C9A84C;--gl:#F0D275;--gd:#7a5210;
+  --tx:rgba(240,225,170,.9);--mt:rgba(240,225,170,.38);
+  --bd:rgba(201,168,76,.16);--bdh:rgba(201,168,76,.5);
+  --r:14px;--rs:9px;
+  --nav-h:56px; /* mobile bottom nav height */
 }
-html{scroll-behavior:smooth}
-body{background:var(--bg);font-family:'Amiri',serif;color:var(--text);min-height:100vh;direction:rtl;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 80% 50% at 5% 0%,rgba(201,168,76,.06),transparent 55%),
-             radial-gradient(ellipse 60% 70% at 95% 100%,rgba(14,80,55,.2),transparent 55%),
-             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A84C' stroke-width='0.2' opacity='0.07'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpolygon points='32,6 39,19 54,19 43,28 47,42 32,34 17,42 21,28 10,19 25,19'/%3E%3C/g%3E%3C/svg%3E")}
-.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 16px 60px}
+html,body{height:100%;overscroll-behavior:none}
+body{
+  background:var(--bg);font-family:'Amiri',serif;
+  color:var(--tx);direction:rtl;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 5% 0%,rgba(201,168,76,.06),transparent 55%),
+    radial-gradient(ellipse 60% 70% at 95% 100%,rgba(14,80,55,.18),transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23C9A84C' stroke-width='0.2' opacity='0.07'%3E%3Ccircle cx='32' cy='32' r='28'/%3E%3Cpolygon points='32,6 39,19 54,19 43,28 47,42 32,34 17,42 21,28 10,19 25,19'/%3E%3C/g%3E%3C/svg%3E");
+}
 
-/* Header */
-.hdr{text-align:center;padding:38px 16px 30px}
-.hdr-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.08);border:1px solid var(--border);border-radius:40px;padding:5px 16px;margin-bottom:16px;font-size:.72rem;color:var(--gold-l);letter-spacing:3px}
-.hdr-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-l);animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hdr h1{font-family:'Scheherazade New',serif;font-size:clamp(1.9rem,5vw,3rem);background:linear-gradient(140deg,var(--gold-d),var(--gold-l) 38%,var(--gold) 65%,var(--gold-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.25;margin-bottom:10px}
-.hdr-rule{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--muted);font-size:.82rem;letter-spacing:2px}
-.hdr-rule::before,.hdr-rule::after{content:'';flex:1;max-width:70px;height:1px}
-.hdr-rule::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,.4))}
-.hdr-rule::after{background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
+/* ══ Page shell ══ */
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 14px 80px}
+@media(min-width:780px){.page{padding-bottom:40px}}
 
-/* Tab switcher */
-.tabs{display:flex;gap:0;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:40px;padding:3px;margin-bottom:22px;max-width:400px;margin-left:auto;margin-right:auto}
-.tab{flex:1;text-align:center;padding:9px 14px;border-radius:36px;font-size:.85rem;cursor:pointer;transition:.22s;color:var(--muted)}
-.tab.on{background:linear-gradient(130deg,var(--gold-d),var(--gold));color:#1a0900;font-weight:700}
-.tab:not(.on):hover{color:var(--gold-l)}
+/* ══ Header ══ */
+.hdr{text-align:center;padding:28px 12px 22px}
+.hdr-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.08);border:1px solid var(--bd);border-radius:40px;padding:4px 14px;margin-bottom:12px;font-size:.7rem;color:var(--gl);letter-spacing:2.5px}
+.hdr-dot{width:6px;height:6px;border-radius:50%;background:var(--gl);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.hdr h1{font-family:'Scheherazade New',serif;font-size:clamp(1.6rem,5vw,2.8rem);background:linear-gradient(140deg,var(--gd),var(--gl) 40%,var(--gold) 68%,var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.25;margin-bottom:8px}
+.hdr-sub{color:var(--mt);font-size:.8rem;letter-spacing:2px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hdr-sub::before,.hdr-sub::after{content:'';flex:1;max-width:55px;height:1px}
+.hdr-sub::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,.35))}
+.hdr-sub::after{background:linear-gradient(90deg,rgba(201,168,76,.35),transparent)}
 
-/* Panels */
+/* ══ Tabs ══ */
+.tabs{display:flex;background:rgba(0,0,0,.3);border:1px solid var(--bd);border-radius:40px;padding:3px;margin:0 auto 18px;max-width:360px}
+.tab{flex:1;text-align:center;padding:9px 10px;border-radius:36px;font-size:.82rem;cursor:pointer;transition:.2s;color:var(--mt);white-space:nowrap}
+.tab.on{background:linear-gradient(130deg,var(--gd),var(--gold));color:#1a0900;font-weight:700}
+
+/* ══ Panel visibility ══ */
 .panel{display:none}.panel.on{display:block}
 
-/* Layout */
-.layout{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
-@media(max-width:780px){.layout{grid-template-columns:1fr}}
+/* ══ Desktop: 2-col layout ══ */
+@media(min-width:780px){
+  .layout{display:grid;grid-template-columns:330px 1fr;gap:22px;align-items:start}
+  .ctrl{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.2) transparent}
+}
+/* ══ Mobile: single col, controls below ══ */
+@media(max-width:779px){
+  .layout{display:flex;flex-direction:column;gap:14px}
+  .ctrl{order:2}
+  .right-col{order:1}
+}
 
-/* Control panel */
-.ctrl{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45);position:sticky;top:18px}
-.ctrl-hdr{padding:13px 18px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.03));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.ctrl-ic{width:30px;height:30px;border-radius:50%;background:rgba(201,168,76,.14);display:flex;align-items:center;justify-content:center;font-size:14px}
-.ctrl-title{font-family:'Scheherazade New',serif;font-size:.95rem;color:var(--gold-l)}
-.ctrl-body{padding:17px}
-.fld{margin-bottom:15px}
-.fld-lbl{display:flex;align-items:center;gap:7px;font-size:.77rem;color:var(--muted);margin-bottom:7px}
-.fld-num{width:19px;height:19px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.28);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--gold-l);flex-shrink:0}
-input[type=text]{width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:var(--rs);padding:11px 14px;color:#fdf8ea;font-family:'Scheherazade New',serif;font-size:1.1rem;outline:none;transition:.2s}
+/* ══ Control panel ══ */
+.ctrl{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.ctrl-hdr{padding:12px 16px;background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.03));border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.ctrl-ic{width:28px;height:28px;border-radius:50%;background:rgba(201,168,76,.14);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.ctrl-title{font-family:'Scheherazade New',serif;font-size:.92rem;color:var(--gl)}
+.ctrl-body{padding:15px}
+
+/* ══ Fields ══ */
+.fld{margin-bottom:14px}
+.fld-lbl{display:flex;align-items:center;gap:7px;font-size:.75rem;color:var(--mt);margin-bottom:7px}
+.fld-num{width:18px;height:18px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.28);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--gl);flex-shrink:0}
+input[type=text]{
+  width:100%;background:rgba(255,255,255,.04);border:1.5px solid var(--bd);
+  border-radius:var(--rs);padding:12px 14px;color:#fdf8ea;
+  font-family:'Scheherazade New',serif;font-size:1.1rem;outline:none;transition:.2s;
+  -webkit-appearance:none;
+}
 input[type=text]:focus{border-color:var(--gold);background:rgba(201,168,76,.06);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
-input[type=text]::placeholder{color:rgba(255,255,255,.17);font-size:.9rem}
+input[type=text]::placeholder{color:rgba(255,255,255,.17);font-size:.88rem}
 input[type=text].shake{animation:shk .35s ease}
-@keyframes shk{0%,100%{transform:translateX(0)}30%{transform:translateX(-8px)}70%{transform:translateX(8px)}}
+@keyframes shk{0%,100%{transform:translateX(0)}30%{transform:translateX(-7px)}70%{transform:translateX(7px)}}
 
-.clr-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}
-.csw{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:.16s;position:relative;flex-shrink:0}
-.csw:hover{transform:scale(1.18)}
+/* ══ Colors ══ */
+.clr-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.csw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:.16s;position:relative;flex-shrink:0;-webkit-appearance:none}
+.csw:hover,.csw:active{transform:scale(1.18)}
 .csw.on{border-color:#fff;box-shadow:0 0 0 2.5px var(--gold)}
-.csw.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.csw.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9)}
 
-/* Font size */
+/* ══ Font size slider ══ */
 .fs-row{display:flex;align-items:center;gap:10px}
-.fs-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:rgba(201,168,76,.08);color:var(--gold-l);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
-.fs-btn:hover{background:rgba(201,168,76,.2);border-color:var(--gold)}
-.fs-btn:active{transform:scale(.9)}
+.fs-btn{min-width:36px;height:36px;border-radius:9px;border:1.5px solid var(--bd);background:rgba(201,168,76,.08);color:var(--gl);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0;-webkit-appearance:none}
+.fs-btn:hover,.fs-btn:active{background:rgba(201,168,76,.2);border-color:var(--gold)}
 .fs-track{flex:1;position:relative;height:6px;border-radius:3px;background:rgba(201,168,76,.15);cursor:pointer}
-.fs-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));transition:.08s;pointer-events:none}
-.fs-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;background:var(--gold-l);border:2px solid var(--gold-d);box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:grab;pointer-events:all}
-.fs-thumb:active{cursor:grabbing}
-.fs-val{font-size:.78rem;color:var(--gold-l);min-width:52px;text-align:center}
+.fs-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gd),var(--gl));transition:.07s;pointer-events:none}
+.fs-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:var(--gl);border:2.5px solid var(--gd);box-shadow:0 2px 8px rgba(0,0,0,.4);cursor:grab;pointer-events:all;touch-action:none}
+.fs-val{font-size:.8rem;color:var(--gl);min-width:54px;text-align:center}
 
-/* Upload zone */
-.upload-zone{border:2px dashed rgba(201,168,76,.3);border-radius:var(--rs);padding:24px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:rgba(201,168,76,.03)}
+/* ══ Upload zone ══ */
+.upload-zone{border:2px dashed rgba(201,168,76,.3);border-radius:var(--rs);padding:20px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:rgba(201,168,76,.03)}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--gold);background:rgba(201,168,76,.08)}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-zone-ic{font-size:32px;margin-bottom:6px}
-.upload-zone-txt{font-size:.82rem;color:var(--muted);line-height:1.6}
-.upload-zone-hint{font-size:.7rem;color:rgba(201,168,76,.35);margin-top:4px}
+.upload-zone-ic{font-size:28px;margin-bottom:5px}
+.upload-zone-txt{font-size:.8rem;color:var(--mt);line-height:1.6}
 .upload-preview{position:relative;display:none}
-.upload-preview img{width:100%;border-radius:8px;display:block}
-.upload-remove{position:absolute;top:6px;left:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
-.upload-remove:hover{background:rgba(180,30,30,.8)}
+.upload-preview img{width:100%;border-radius:8px;display:block;max-height:160px;object-fit:cover}
+.upload-remove{position:absolute;top:6px;left:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.3)}
 
-.hr{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:13px 0}
+.hr{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin:12px 0}
+.pos-hint{display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.14);border-radius:8px;font-size:.74rem;color:var(--mt);margin-bottom:12px}
+.pos-reset{margin-right:auto;font-size:.68rem;color:rgba(201,168,76,.5);cursor:pointer;padding:3px 9px;border-radius:6px;border:1px solid rgba(201,168,76,.2);background:none;-webkit-appearance:none}
 
-.pos-hint{display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:8px;font-size:.75rem;color:var(--muted);margin-bottom:12px}
-.pos-reset{margin-right:auto;font-size:.69rem;color:rgba(201,168,76,.5);cursor:pointer;padding:2px 8px;border-radius:6px;border:1px solid rgba(201,168,76,.2);background:none;transition:.15s}
-.pos-reset:hover{color:var(--gold-l);border-color:var(--gold)}
-
-/* AI */
-.ai-wrap{background:linear-gradient(140deg,rgba(201,168,76,.06),rgba(10,60,48,.35));border:1px solid var(--border);border-radius:var(--rs);padding:13px}
-.ai-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,rgba(201,168,76,.18),rgba(20,90,60,.3));border:1px solid rgba(201,168,76,.28);border-radius:20px;padding:3px 10px;font-size:.7rem;color:var(--gold-l);margin-bottom:8px;letter-spacing:1px}
-.ai-dot2{width:6px;height:6px;border-radius:50%;background:var(--gold-l);animation:blink 1.5s infinite}
-.ai-desc{font-size:.75rem;color:var(--muted);margin-bottom:8px;line-height:1.6}
+/* ══ AI ══ */
+.ai-wrap{background:linear-gradient(140deg,rgba(201,168,76,.06),rgba(10,60,48,.35));border:1px solid var(--bd);border-radius:var(--rs);padding:13px}
+.ai-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,rgba(201,168,76,.18),rgba(20,90,60,.3));border:1px solid rgba(201,168,76,.28);border-radius:20px;padding:3px 10px;font-size:.68rem;color:var(--gl);margin-bottom:8px;letter-spacing:1px}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--gl);animation:blink 1.5s infinite}
+.ai-desc{font-size:.74rem;color:var(--mt);margin-bottom:8px;line-height:1.6}
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
-.chip{background:rgba(201,168,76,.08);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:.71rem;color:rgba(240,225,170,.65);cursor:pointer;transition:.15s;font-family:'Amiri',serif}
-.chip:hover{background:rgba(201,168,76,.18);color:var(--gold-l)}
-#aiOut,#aiOut2{font-size:.81rem;color:var(--gold-l);line-height:1.7;min-height:18px;display:none}
+.chip{background:rgba(201,168,76,.08);border:1px solid var(--bd);border-radius:20px;padding:6px 12px;font-size:.72rem;color:rgba(240,225,170,.65);cursor:pointer;transition:.15s;font-family:'Amiri',serif;-webkit-appearance:none}
+.chip:hover,.chip:active{background:rgba(201,168,76,.2);color:var(--gl)}
+.ai-out{font-size:.8rem;color:var(--gl);line-height:1.7;min-height:16px;display:none}
 .dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 2px;animation:dot 1.1s ease infinite}
 .dots span:nth-child(2){animation-delay:.18s}.dots span:nth-child(3){animation-delay:.36s}
 @keyframes dot{0%,80%,100%{transform:scale(0);opacity:.3}40%{transform:scale(1);opacity:1}}
 
-/* Buttons */
-.btn{width:100%;padding:13px;border:none;border-radius:var(--rs);font-family:'Scheherazade New',serif;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.22s;margin-bottom:9px}
-.btn-make{background:linear-gradient(130deg,var(--gold-d),var(--gold) 50%,var(--gold-l));color:#1a0900;font-weight:700;box-shadow:0 4px 18px rgba(201,168,76,.28)}
-.btn-make:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,.42)}
-.btn-make:active{transform:none}
-.btn-dl{background:transparent;border:1.5px solid var(--border);color:var(--gold-l)}
-.btn-dl:hover:not(:disabled){background:rgba(201,168,76,.1);border-color:var(--bh);transform:translateY(-1px)}
+/* ══ Buttons ══ */
+.btn{width:100%;padding:14px;border:none;border-radius:var(--rs);font-family:'Scheherazade New',serif;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;margin-bottom:9px;-webkit-appearance:none}
+.btn-make{background:linear-gradient(130deg,var(--gd),var(--gold) 50%,var(--gl));color:#1a0900;font-weight:700;box-shadow:0 4px 18px rgba(201,168,76,.28)}
+.btn-make:hover,.btn-make:active{transform:translateY(-1px);box-shadow:0 8px 28px rgba(201,168,76,.4)}
+.btn-dl{background:transparent;border:1.5px solid var(--bd);color:var(--gl)}
+.btn-dl:hover:not(:disabled),.btn-dl:active:not(:disabled){background:rgba(201,168,76,.1);border-color:var(--bdh)}
 .btn-dl:disabled{opacity:.28;pointer-events:none}
 
-/* Gallery */
-.right{display:flex;flex-direction:column;gap:20px}
+/* ══ Right column ══ */
+.right-col{display:flex;flex-direction:column;gap:16px}
+
+/* ══ Gallery ══ */
 .gal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.gal-title{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--muted);letter-spacing:1.5px}
-.gal-title::before{content:'';width:18px;height:1px;background:var(--gold)}
-.gal-count{font-size:.68rem;color:rgba(201,168,76,.4);background:rgba(201,168,76,.07);border-radius:20px;padding:2px 9px}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.gal-title{display:flex;align-items:center;gap:8px;font-size:.73rem;color:var(--mt);letter-spacing:1.5px}
+.gal-title::before{content:'';width:16px;height:1px;background:var(--gold)}
+.gal-count{font-size:.67rem;color:rgba(201,168,76,.4);background:rgba(201,168,76,.07);border-radius:20px;padding:2px 9px}
+
+/* ══ Gallery grid ══ */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:7px}
+@media(max-width:400px){.gallery{grid-template-columns:repeat(3,1fr)}}
+
 .gt{border:1.5px solid rgba(201,168,76,.1);border-radius:var(--rs);overflow:hidden;cursor:pointer;transition:.2s;background:rgba(0,0,0,.25);position:relative}
-.gt:hover{border-color:rgba(201,168,76,.45);transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.4)}
-.gt.on{border-color:var(--gold-l);box-shadow:0 0 0 2.5px rgba(240,210,117,.35)}
-.gt img{width:100%;height:78px;object-fit:cover;display:block;transition:.2s}
-.gt:hover img{transform:scale(1.04)}
-.gt-lb{padding:5px 6px;font-size:.63rem;color:rgba(240,208,128,.65);text-align:center;background:rgba(0,0,0,.4)}
-.gt-ck{position:absolute;top:5px;left:5px;width:18px;height:18px;border-radius:50%;background:var(--gold-l);color:#1a0900;font-size:9px;display:none;align-items:center;justify-content:center}
+.gt:hover,.gt:active{border-color:rgba(201,168,76,.45);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.gt.on{border-color:var(--gl);box-shadow:0 0 0 2px rgba(240,210,117,.35)}
+.gt img{width:100%;height:72px;object-fit:cover;display:block}
+.gt-lb{padding:4px 5px;font-size:.6rem;color:rgba(240,208,128,.65);text-align:center;background:rgba(0,0,0,.4);line-height:1.3}
+.gt-ck{position:absolute;top:4px;left:4px;width:17px;height:17px;border-radius:50%;background:var(--gl);color:#1a0900;font-size:9px;display:none;align-items:center;justify-content:center}
 .gt.on .gt-ck{display:flex}
 
-/* Preview */
-.prev-box{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 20px 55px rgba(0,0,0,.45)}
-.prev-bar{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.prev-bar-l{display:flex;align-items:center;gap:8px}
-.prev-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:blink 2s infinite}
-.prev-bar-txt{font-size:.75rem;color:var(--muted);letter-spacing:1px}
-.prev-tag{font-size:.65rem;background:rgba(201,168,76,.1);border-radius:20px;padding:3px 10px;color:rgba(240,208,128,.6);max-width:160px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.cv-wrap{padding:14px;display:flex;align-items:center;justify-content:center;min-height:180px}
-.ph{display:flex;flex-direction:column;align-items:center;gap:11px;color:rgba(201,168,76,.2);text-align:center;width:100%}
-.ph-ic{font-size:38px}.ph-tx{font-size:.78rem;line-height:1.7;max-width:200px}
+/* ══ Loading indicator for dynamic cards ══ */
+.gal-loading{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--mt);padding:8px 0}
 
-/* Drag canvas wrapper */
-#cvContainer,#cvContainer2{position:relative;display:none}
-#cv,#cv2{display:block;max-width:100%;border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,.55)}
-.drag-layer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:8px;overflow:hidden;pointer-events:none}
-.drag-text{
+/* ══ Preview box ══ */
+.prev-box{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.prev-bar{padding:9px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.prev-bar-l{display:flex;align-items:center;gap:7px}
+.prev-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 2s infinite}
+.prev-bar-txt{font-size:.73rem;color:var(--mt);letter-spacing:.5px}
+.prev-tag{font-size:.63rem;background:rgba(201,168,76,.1);border-radius:20px;padding:3px 9px;color:rgba(240,208,128,.6);max-width:140px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cv-wrap{padding:12px;display:flex;align-items:center;justify-content:center;min-height:160px}
+.ph{display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(201,168,76,.2);text-align:center;width:100%}
+.ph-ic{font-size:34px}.ph-tx{font-size:.75rem;line-height:1.7;max-width:190px}
+
+/* ══ Drag canvas ══ */
+#cvCont,#cvCont2{position:relative;display:none;touch-action:none}
+#cv,#cv2{display:block;max-width:100%;border-radius:7px;box-shadow:0 10px 35px rgba(0,0,0,.5)}
+.dlayer{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:7px;overflow:hidden;pointer-events:none}
+.dtxt{
   position:absolute;pointer-events:all;cursor:move;
-  transform:translate(-50%,-50%);
-  white-space:nowrap;
-  padding:3px 8px;
-  border:1.5px dashed rgba(201,168,76,.55);
-  border-radius:6px;
-  background:rgba(255,255,255,.07);
-  backdrop-filter:blur(2px);
-  display:none;
-  user-select:none;-webkit-user-select:none
+  transform:translate(-50%,-50%);white-space:nowrap;
+  padding:3px 8px;border:1.5px dashed rgba(201,168,76,.55);
+  border-radius:6px;background:rgba(255,255,255,.08);
+  backdrop-filter:blur(2px);display:none;
+  user-select:none;-webkit-user-select:none;touch-action:none
 }
-.drag-text.dragging{border-color:var(--gold-l);background:rgba(255,255,255,.15);cursor:grabbing}
-.drag-hint-badge{
-  position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
-  font-size:.64rem;color:rgba(201,168,76,.5);
-  background:rgba(0,0,0,.55);border-radius:20px;padding:3px 10px;
-  white-space:nowrap;pointer-events:none;display:none
+.dtxt.drag{border-color:var(--gl);background:rgba(255,255,255,.14)}
+.dhint{
+  position:absolute;bottom:5px;left:50%;transform:translateX(-50%);
+  font-size:.62rem;color:rgba(201,168,76,.45);background:rgba(0,0,0,.55);
+  border-radius:20px;padding:3px 9px;white-space:nowrap;pointer-events:none;display:none
 }
 
-/* Toast */
-.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(10,38,32,.96);border:1px solid rgba(201,168,76,.28);border-radius:var(--rs);padding:11px 16px;font-size:.83rem;color:var(--gold-l);display:flex;align-items:center;gap:8px;transform:translateY(90px);opacity:0;transition:.38s cubic-bezier(.34,1.56,.64,1);pointer-events:none;box-shadow:0 8px 28px rgba(0,0,0,.45);direction:rtl}
-.toast.show{transform:translateY(0);opacity:1}
-/* Sparkle */
-.sp{position:fixed;pointer-events:none;z-index:9999;font-size:18px;animation:span 1.2s ease forwards}
-@keyframes span{from{opacity:1;transform:translate(0,0) scale(1) rotate(0deg)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0) rotate(var(--rot))}}
+/* ══ Toast ══ */
+.toast{
+  position:fixed;z-index:9999;
+  background:rgba(10,38,32,.96);border:1px solid rgba(201,168,76,.28);
+  border-radius:var(--rs);padding:11px 16px;font-size:.82rem;color:var(--gl);
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 8px 28px rgba(0,0,0,.45);direction:rtl;
+  /* mobile: bottom center, desktop: bottom right */
+  bottom:20px;left:50%;transform:translateX(-50%) translateY(90px);
+  opacity:0;transition:.35s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;max-width:calc(100vw - 32px);
+}
+@media(min-width:780px){.toast{left:auto;right:24px;transform:translateY(90px)}}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(min-width:780px){.toast.show{transform:translateY(0)}}
+
+/* ══ Sparkle ══ */
+.sp{position:fixed;pointer-events:none;z-index:9999;font-size:17px;animation:spanim 1.2s ease forwards}
+@keyframes spanim{from{opacity:1;transform:translate(0,0) scale(1) rotate(0)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0) rotate(var(--rot))}}
 </style>
 </head>
 <body>
@@ -185,59 +220,60 @@ input[type=text].shake{animation:shk .35s ease}
 <header class="hdr">
   <div class="hdr-pill"><span class="hdr-dot"></span>JPF · بطاقات التهنئة</div>
   <h1>بطاقات عيد الفطر المبارك</h1>
-  <div class="hdr-rule">تقبّل الله منا ومنكم صالح الأعمال</div>
+  <div class="hdr-sub">تقبّل الله منا ومنكم صالح الأعمال</div>
 </header>
 
-<!-- Tab switcher -->
 <div class="tabs">
   <div class="tab on" onclick="switchTab(0,this)">🌙 تصاميم JPF</div>
-  <div class="tab" onclick="switchTab(1,this)">📸 رفع صورة خاصة</div>
+  <div class="tab" onclick="switchTab(1,this)">📸 صورة خاصة</div>
 </div>
 
-<!-- ══════ PANEL 0: JPF Cards ══════ -->
-<div class="panel on" id="panel0">
+<!-- ══════ PANEL 0 ══════ -->
+<div class="panel on" id="p0">
 <div class="layout">
+
+  <!-- Controls -->
   <aside class="ctrl">
     <div class="ctrl-hdr"><div class="ctrl-ic">✒</div><div class="ctrl-title">تخصيص البطاقة</div></div>
     <div class="ctrl-body">
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">١</span>اسم المُهنَّأ</div>
-        <input type="text" id="nameIn" placeholder="مثال: أحمد محمد" maxlength="30" oninput="onType(0)">
+        <input type="text" id="n0" placeholder="مثال: أحمد محمد" maxlength="30" oninput="onType(0)">
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٢</span>لون الاسم</div>
-        <div class="clr-row" id="clrRow0">
+        <div class="clr-row" id="cr0">
           <div class="csw on"  style="background:#1e1a5e" data-c="#1e1a5e" onclick="pickClr(0,this)"></div>
           <div class="csw"     style="background:#3d0c0c" data-c="#3d0c0c" onclick="pickClr(0,this)"></div>
           <div class="csw"     style="background:#1a3800" data-c="#1a3800" onclick="pickClr(0,this)"></div>
           <div class="csw"     style="background:#3a2000" data-c="#3a2000" onclick="pickClr(0,this)"></div>
-          <div class="csw"     style="background:#111"    data-c="#111111" onclick="pickClr(0,this)"></div>
+          <div class="csw"     style="background:#111"    data-c="#111"    onclick="pickClr(0,this)"></div>
           <div class="csw"     style="background:#C9A84C" data-c="#C9A84C" onclick="pickClr(0,this)"></div>
-          <div class="csw"     style="background:#fff;border:1px solid #999" data-c="#ffffff" onclick="pickClr(0,this)"></div>
+          <div class="csw"     style="background:#fff;border:1px solid #999" data-c="#fff" onclick="pickClr(0,this)"></div>
         </div>
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٣</span>حجم الخط</div>
         <div class="fs-row">
-          <button class="fs-btn" onclick="changeFs(0,-4)">−</button>
-          <div class="fs-track" id="fsTrack0" onclick="fsClick(0,event)">
-            <div class="fs-fill" id="fsFill0" style="width:0%"></div>
-            <div class="fs-thumb" id="fsThumb0" style="left:0%"></div>
+          <button class="fs-btn" onclick="changeFs(0,-5)">−</button>
+          <div class="fs-track" id="fst0" onclick="fsClick(0,event)">
+            <div class="fs-fill" id="fsf0" style="width:0%"></div>
+            <div class="fs-thumb" id="fsth0" style="left:0%"></div>
           </div>
-          <button class="fs-btn" onclick="changeFs(0,+4)">+</button>
-          <span class="fs-val" id="fsVal0">تلقائي</span>
+          <button class="fs-btn" onclick="changeFs(0,+5)">+</button>
+          <span class="fs-val" id="fsv0">تلقائي</span>
         </div>
       </div>
       <div class="hr"></div>
       <div class="pos-hint">
-        <span>✋ اسحب الاسم داخل البطاقة</span>
-        <button class="pos-reset" onclick="resetPos(0)">إعادة للمكان</button>
+        <span>✋ اسحب الاسم لتحريكه</span>
+        <button class="pos-reset" onclick="resetPos(0)">إعادة</button>
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٤</span>رسالة بالذكاء الاصطناعي</div>
         <div class="ai-wrap">
-          <div class="ai-badge"><span class="ai-dot2"></span>Claude AI</div>
-          <div class="ai-desc">اختر صفة الشخص لإضافة رسالة تهنئة شخصية</div>
+          <div class="ai-badge"><span class="ai-dot"></span>Claude AI</div>
+          <div class="ai-desc">اختر صفة الشخص لإضافة رسالة تهنئة</div>
           <div class="chips">
             <div class="chip" onclick="aiGen(0,'زميل عمل')">🤝 زميل</div>
             <div class="chip" onclick="aiGen(0,'صديق مقرب')">💛 صديق</div>
@@ -245,99 +281,94 @@ input[type=text].shake{animation:shk .35s ease}
             <div class="chip" onclick="aiGen(0,'شريك أعمال')">🤲 شريك</div>
             <div class="chip" onclick="aiGen(0,'الفريق')">👥 الفريق</div>
           </div>
-          <div id="aiOut"></div>
+          <div class="ai-out" id="ao0"></div>
         </div>
       </div>
       <div class="hr"></div>
       <button class="btn btn-make" onclick="makeFinal(0)">✨ &nbsp;اصنع البطاقة</button>
-      <button class="btn btn-dl" id="dlBtn0" disabled onclick="doDownload(0)">⬇ &nbsp;تحميل البطاقة</button>
+      <button class="btn btn-dl" id="dl0" disabled onclick="doDownload(0)">⬇ &nbsp;تحميل البطاقة</button>
     </div>
   </aside>
 
-  <div class="right">
+  <!-- Right -->
+  <div class="right-col">
     <div>
-      <div class="gal-hdr"><div class="gal-title">اختر التصميم</div><div class="gal-count">10 تصاميم</div></div>
-      <div class="gallery" id="gal"></div>
+      <div class="gal-hdr">
+        <div class="gal-title">اختر التصميم</div>
+        <div class="gal-count" id="galCnt">تحميل...</div>
+      </div>
+      <div class="gallery" id="gal0"></div>
+      <div class="gal-loading" id="galLoading" style="display:none">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span>جارٍ تحميل الصور الإضافية من GitHub...</span>
+      </div>
     </div>
     <div class="prev-box">
       <div class="prev-bar">
-        <div class="prev-bar-l"><div class="prev-dot"></div><span class="prev-bar-txt">معاينة مباشرة</span></div>
-        <div class="prev-tag" id="prevTag0">—</div>
+        <div class="prev-bar-l"><div class="prev-dot"></div><span class="prev-bar-txt">معاينة · اسحب الاسم</span></div>
+        <div class="prev-tag" id="ptag0">—</div>
       </div>
       <div class="cv-wrap">
         <div class="ph" id="ph0"><span class="ph-ic">🌙</span><span class="ph-tx">اختر تصميماً ثم اكتب الاسم</span></div>
-        <div id="cvContainer">
-          <canvas id="cv"></canvas>
-          <div class="drag-layer">
-            <div class="drag-text" id="dt0"></div>
-          </div>
-          <div class="drag-hint-badge" id="hint0">✋ اسحب الاسم</div>
-        </div>
+        <div id="cvCont"><canvas id="cv"></canvas><div class="dlayer"><div class="dtxt" id="dt0"></div></div><div class="dhint" id="dh0">✋ اسحب الاسم</div></div>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-<!-- ══════ PANEL 1: Custom Upload ══════ -->
-<div class="panel" id="panel1">
+<!-- ══════ PANEL 1 ══════ -->
+<div class="panel" id="p1">
 <div class="layout">
   <aside class="ctrl">
-    <div class="ctrl-hdr"><div class="ctrl-ic">📸</div><div class="ctrl-title">تخصيص صورتك</div></div>
+    <div class="ctrl-hdr"><div class="ctrl-ic">📸</div><div class="ctrl-title">صورتك الخاصة</div></div>
     <div class="ctrl-body">
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">١</span>ارفع صورتك</div>
-        <div class="upload-zone" id="uploadZone" ondragover="dragOv(event)" ondragleave="dragLv(event)" ondrop="dropImg(event)">
-          <input type="file" id="imgFile" accept="image/*" onchange="loadUpload(event)">
-          <div id="uploadPlaceholder">
-            <div class="upload-zone-ic">🖼️</div>
-            <div class="upload-zone-txt">انقر لرفع صورة<br>أو اسحبها هنا</div>
-            <div class="upload-zone-hint">PNG, JPG, WEBP</div>
-          </div>
-          <div class="upload-preview" id="uploadPreview">
-            <img id="uploadThumb" src="" alt="">
-            <div class="upload-remove" onclick="removeUpload(event)">✕</div>
-          </div>
+        <div class="upload-zone" id="uz" ondragover="dOv(event)" ondragleave="dLv()" ondrop="dDrop(event)">
+          <input type="file" id="uf" accept="image/*" onchange="loadUp(event)">
+          <div id="uph"><div class="upload-zone-ic">🖼️</div><div class="upload-zone-txt">انقر لرفع صورة أو اسحبها هنا<br><small style="font-size:.68rem;opacity:.5">PNG · JPG · WEBP</small></div></div>
+          <div class="upload-preview" id="upv"><img id="uth" src="" alt=""><div class="upload-remove" onclick="removeUp(event)">✕</div></div>
         </div>
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٢</span>النص</div>
-        <input type="text" id="nameIn2" placeholder="اكتب ما تريد..." maxlength="40" oninput="onType(1)">
+        <input type="text" id="n1" placeholder="اكتب ما تريد..." maxlength="40" oninput="onType(1)">
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٣</span>لون النص</div>
-        <div class="clr-row" id="clrRow1">
+        <div class="clr-row" id="cr1">
           <div class="csw on"  style="background:#1e1a5e" data-c="#1e1a5e" onclick="pickClr(1,this)"></div>
           <div class="csw"     style="background:#3d0c0c" data-c="#3d0c0c" onclick="pickClr(1,this)"></div>
           <div class="csw"     style="background:#1a3800" data-c="#1a3800" onclick="pickClr(1,this)"></div>
           <div class="csw"     style="background:#3a2000" data-c="#3a2000" onclick="pickClr(1,this)"></div>
-          <div class="csw"     style="background:#111"    data-c="#111111" onclick="pickClr(1,this)"></div>
+          <div class="csw"     style="background:#111"    data-c="#111"    onclick="pickClr(1,this)"></div>
           <div class="csw"     style="background:#C9A84C" data-c="#C9A84C" onclick="pickClr(1,this)"></div>
-          <div class="csw"     style="background:#ffffff;border:1px solid #999" data-c="#ffffff" onclick="pickClr(1,this)"></div>
+          <div class="csw"     style="background:#fff;border:1px solid #999" data-c="#fff" onclick="pickClr(1,this)"></div>
         </div>
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٤</span>حجم الخط</div>
         <div class="fs-row">
-          <button class="fs-btn" onclick="changeFs(1,-4)">−</button>
-          <div class="fs-track" id="fsTrack1" onclick="fsClick(1,event)">
-            <div class="fs-fill" id="fsFill1" style="width:50%"></div>
-            <div class="fs-thumb" id="fsThumb1" style="left:50%"></div>
+          <button class="fs-btn" onclick="changeFs(1,-5)">−</button>
+          <div class="fs-track" id="fst1" onclick="fsClick(1,event)">
+            <div class="fs-fill" id="fsf1" style="width:50%"></div>
+            <div class="fs-thumb" id="fsth1" style="left:50%"></div>
           </div>
-          <button class="fs-btn" onclick="changeFs(1,+4)">+</button>
-          <span class="fs-val" id="fsVal1">60</span>
+          <button class="fs-btn" onclick="changeFs(1,+5)">+</button>
+          <span class="fs-val" id="fsv1">60</span>
         </div>
       </div>
       <div class="hr"></div>
       <div class="pos-hint">
         <span>✋ اسحب النص لتحريكه</span>
-        <button class="pos-reset" onclick="resetPos(1)">إعادة للمركز</button>
+        <button class="pos-reset" onclick="resetPos(1)">إعادة</button>
       </div>
       <div class="fld">
         <div class="fld-lbl"><span class="fld-num">٥</span>رسالة بالذكاء الاصطناعي</div>
         <div class="ai-wrap">
-          <div class="ai-badge"><span class="ai-dot2"></span>Claude AI</div>
-          <div class="ai-desc">اكتب رسالة تهنئة تُضاف أسفل النص</div>
+          <div class="ai-badge"><span class="ai-dot"></span>Claude AI</div>
+          <div class="ai-desc">رسالة تهنئة تُضاف أسفل النص</div>
           <div class="chips">
             <div class="chip" onclick="aiGen(1,'زميل عمل')">🤝 زميل</div>
             <div class="chip" onclick="aiGen(1,'صديق مقرب')">💛 صديق</div>
@@ -345,30 +376,23 @@ input[type=text].shake{animation:shk .35s ease}
             <div class="chip" onclick="aiGen(1,'شريك أعمال')">🤲 شريك</div>
             <div class="chip" onclick="aiGen(1,'الفريق')">👥 الفريق</div>
           </div>
-          <div id="aiOut2"></div>
+          <div class="ai-out" id="ao1"></div>
         </div>
       </div>
       <div class="hr"></div>
       <button class="btn btn-make" onclick="makeFinal(1)">✨ &nbsp;اصنع البطاقة</button>
-      <button class="btn btn-dl" id="dlBtn1" disabled onclick="doDownload(1)">⬇ &nbsp;تحميل الصورة</button>
+      <button class="btn btn-dl" id="dl1" disabled onclick="doDownload(1)">⬇ &nbsp;تحميل الصورة</button>
     </div>
   </aside>
-
-  <div class="right">
+  <div class="right-col">
     <div class="prev-box">
       <div class="prev-bar">
-        <div class="prev-bar-l"><div class="prev-dot"></div><span class="prev-bar-txt">معاينة مباشرة</span></div>
-        <div class="prev-tag" id="prevTag1">صورة مخصصة</div>
+        <div class="prev-bar-l"><div class="prev-dot"></div><span class="prev-bar-txt">معاينة</span></div>
+        <div class="prev-tag" id="ptag1">صورة مخصصة</div>
       </div>
       <div class="cv-wrap">
-        <div class="ph" id="ph1"><span class="ph-ic">📸</span><span class="ph-tx">ارفع صورة ثم اكتب النص المطلوب</span></div>
-        <div id="cvContainer2">
-          <canvas id="cv2"></canvas>
-          <div class="drag-layer">
-            <div class="drag-text" id="dt1"></div>
-          </div>
-          <div class="drag-hint-badge" id="hint1">✋ اسحب النص</div>
-        </div>
+        <div class="ph" id="ph1"><span class="ph-ic">📸</span><span class="ph-tx">ارفع صورة ثم اكتب النص</span></div>
+        <div id="cvCont2"><canvas id="cv2"></canvas><div class="dlayer"><div class="dtxt" id="dt1"></div></div><div class="dhint" id="dh1">✋ اسحب النص</div></div>
       </div>
     </div>
   </div>
@@ -379,6 +403,9 @@ input[type=text].shake{animation:shk .35s ease}
 <div class="toast" id="toast"></div>
 
 <script>
+// ════════════════════════════════════════
+//  CARDS DATA (embedded)
+// ════════════════════════════════════════
 const CARDS = {
   "h1": {
     label:"أفقي - JPF", dir:"h",
@@ -452,447 +479,438 @@ const CARDS = {
   },
 };
 
-// ══════════════ CONFIG ══════════════
+// ════════════════════════════════════════
+//  GITHUB DYNAMIC CARDS CONFIG
+//  ← أضف صورك في مجلد "cards" بالـ Repository
+// ════════════════════════════════════════
+const GH_REPO = 'theevennts-coder/jpf';
+const GH_FOLDER = 'cards';
+const GH_RAW = `https://raw.githubusercontent.com/${GH_REPO}/main/${GH_FOLDER}/`;
+const GH_API = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FOLDER}`;
+
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
 const FS_MIN=10, FS_MAX=140;
-
-// ══════════════ STATE (per panel) ══════════════
-const S = [
-  { // panel 0
-    sel: Object.keys(CARDS)[2],
-    clr:'#1e1a5e', fs:0, pos:null, aiMsg:'',
-    get nameEl(){return document.getElementById('nameIn')},
-    get cv(){return document.getElementById('cv')},
-    get ph(){return document.getElementById('ph0')},
-    get container(){return document.getElementById('cvContainer')},
-    get dt(){return document.getElementById('dt0')},
-    get hint(){return document.getElementById('hint0')},
-    get dlBtn(){return document.getElementById('dlBtn0')},
-    get prevTag(){return document.getElementById('prevTag0')},
-    uploadImg:null
-  },
-  { // panel 1
-    sel:'custom', clr:'#1e1a5e', fs:60, pos:null, aiMsg:'',
-    get nameEl(){return document.getElementById('nameIn2')},
-    get cv(){return document.getElementById('cv2')},
-    get ph(){return document.getElementById('ph1')},
-    get container(){return document.getElementById('cvContainer2')},
-    get dt(){return document.getElementById('dt1')},
-    get hint(){return document.getElementById('hint1')},
-    get dlBtn(){return document.getElementById('dlBtn1')},
-    get prevTag(){return document.getElementById('prevTag1')},
-    uploadImg:null
-  }
+const S=[
+  {sel:Object.keys(CARDS)[2],clr:'#1e1a5e',fs:0,pos:null,aiMsg:'',upImg:null,
+   get n(){return document.getElementById('n0')},
+   get cv(){return document.getElementById('cv')},
+   get ph(){return document.getElementById('ph0')},
+   get cc(){return document.getElementById('cvCont')},
+   get dt(){return document.getElementById('dt0')},
+   get dh(){return document.getElementById('dh0')},
+   get dl(){return document.getElementById('dl0')},
+   get pt(){return document.getElementById('ptag0')}},
+  {sel:'custom',clr:'#1e1a5e',fs:60,pos:null,aiMsg:'',upImg:null,
+   get n(){return document.getElementById('n1')},
+   get cv(){return document.getElementById('cv2')},
+   get ph(){return document.getElementById('ph1')},
+   get cc(){return document.getElementById('cvCont2')},
+   get dt(){return document.getElementById('dt1')},
+   get dh(){return document.getElementById('dh1')},
+   get dl(){return document.getElementById('dl1')},
+   get pt(){return document.getElementById('ptag1')}}
 ];
-
-// ══════════════ FONTS ══════════════
-// Pre-warm fonts so canvas renders them correctly
-let fontsReady=false;
+const IMGS={};
+let fontsOk=false;
 document.fonts.ready.then(()=>{
-  fontsReady=true;
-  // Force-load both weights by drawing off-screen
-  const c=document.createElement('canvas'); c.width=1;c.height=1;
-  const x=c.getContext('2d');
-  x.font="bold 20px 'Scheherazade New'"; x.fillText('ب',0,0);
-  x.font="bold 20px 'Amiri'"; x.fillText('ب',0,0);
+  fontsOk=true;
+  const tc=document.createElement('canvas');tc.width=1;tc.height=1;
+  const x=tc.getContext('2d');
+  x.font="bold 20px 'Scheherazade New'";x.fillText('ب',0,0);
+  x.font="bold 20px 'Amiri'";x.fillText('ب',0,0);
 });
 
-// ══════════════ TAB ══════════════
-function switchTab(idx,el){
+// ════════════════════════════════════════
+//  GALLERY BUILD + DYNAMIC LOAD FROM GITHUB
+// ════════════════════════════════════════
+function buildGallery(){
+  const g=document.getElementById('gal0');
+  Object.entries(CARDS).forEach(([k,c])=>{
+    g.appendChild(makeGT(k,c.label,c.thumb,false));
+  });
+  S[0].pt.textContent=CARDS[S[0].sel].label;
+  updateGalCount();
+  // Try to load extra cards from GitHub
+  loadGithubCards();
+}
+
+function makeGT(key,label,thumbSrc,isDynamic){
+  const d=document.createElement('div');
+  d.className='gt'+(key===S[0].sel?' on':'');
+  d.dataset.k=key;
+  d.innerHTML=`<img src="${thumbSrc}" loading="lazy" alt="${label}" onerror="this.parentElement.remove();updateGalCount()"><div class="gt-lb">${label}</div><div class="gt-ck">✓</div>`;
+  d.onclick=()=>{
+    document.querySelectorAll('#gal0 .gt').forEach(x=>x.classList.remove('on'));
+    d.classList.add('on'); S[0].sel=key; S[0].pt.textContent=label;
+    resetPos(0); autoRender(0);
+  };
+  // For dynamic cards, store the raw URL so we can load it as an image
+  if(isDynamic) d.dataset.rawUrl = thumbSrc.replace('/thumb/','/').replace('_thumb','');
+  return d;
+}
+
+async function loadGithubCards(){
+  const loadEl=document.getElementById('galLoading');
+  loadEl.style.display='flex';
+  try{
+    const res=await fetch(GH_API);
+    if(!res.ok) throw new Error('no folder');
+    const files=await res.json();
+    const imgs=files.filter(f=>/\.(jpg|jpeg|png|webp|gif)$/i.test(f.name));
+    if(imgs.length===0){loadEl.style.display='none';return;}
+    const g=document.getElementById('gal0');
+    imgs.forEach(f=>{
+      const rawUrl=GH_RAW+encodeURIComponent(f.name);
+      const label=f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
+      const key='gh_'+f.name;
+      // Register in IMGS cache keyed by rawUrl
+      CARDS[key]={label,w:800,h:600,nameX:.5,nameY:.65,nameW:.7,nameH:.1,src:rawUrl,thumb:rawUrl,isDynamic:true};
+      g.appendChild(makeGT(key,label,rawUrl,true));
+    });
+    updateGalCount();
+  }catch(e){
+    // Folder doesn't exist yet — silently skip
+  }finally{
+    loadEl.style.display='none';
+  }
+}
+
+function updateGalCount(){
+  document.getElementById('galCnt').textContent=
+    document.querySelectorAll('#gal0 .gt').length+' تصميم';
+}
+
+// ════════════════════════════════════════
+//  TAB
+// ════════════════════════════════════════
+function switchTab(i,el){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');
-  document.querySelectorAll('.panel').forEach((p,i)=>{
-    p.classList.toggle('on',i===idx);
-  });
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('on',i===j));
 }
 
-// ══════════════ GALLERY ══════════════
-(function(){
-  const g=document.getElementById('gal');
-  Object.entries(CARDS).forEach(([k,c])=>{
-    const d=document.createElement('div');
-    d.className='gt'+(k===S[0].sel?' on':'');
-    d.innerHTML=`<img src="${c.thumb}" loading="lazy"><div class="gt-lb">${c.label}</div><div class="gt-ck">✓</div>`;
-    d.onclick=()=>{
-      document.querySelectorAll('.gt').forEach(x=>x.classList.remove('on'));
-      d.classList.add('on'); S[0].sel=k; S[0].prevTag.textContent=c.label;
-      resetPos(0); autoRender(0);
-    };
-    g.appendChild(d);
-  });
-  S[0].prevTag.textContent=CARDS[S[0].sel].label;
-})();
-
-// ══════════════ COLOR ══════════════
+// ════════════════════════════════════════
+//  COLOR
+// ════════════════════════════════════════
 function pickClr(p,el){
-  document.querySelectorAll('#clrRow'+p+' .csw').forEach(e=>e.classList.remove('on'));
+  document.querySelectorAll(`#cr${p} .csw`).forEach(e=>e.classList.remove('on'));
   el.classList.add('on'); S[p].clr=el.dataset.c;
-  updateDragText(p); autoRender(p);
+  updateDT(p); autoRender(p);
 }
 
-// ══════════════ FONT SIZE ══════════════
+// ════════════════════════════════════════
+//  FONT SIZE
+// ════════════════════════════════════════
 function fsUi(p){
   const s=S[p];
-  const pct=s.fs===0?null:Math.round((s.fs-FS_MIN)/(FS_MAX-FS_MIN)*100);
-  document.getElementById('fsFill'+p).style.width=(pct??0)+'%';
-  document.getElementById('fsThumb'+p).style.left=(pct??0)+'%';
-  document.getElementById('fsVal'+p).textContent=s.fs===0?'تلقائي':s.fs;
+  const pct=s.fs===0?0:Math.round((s.fs-FS_MIN)/(FS_MAX-FS_MIN)*100);
+  document.getElementById('fsf'+p).style.width=pct+'%';
+  document.getElementById('fsth'+p).style.left=pct+'%';
+  document.getElementById('fsv'+p).textContent=s.fs===0?'تلقائي':s.fs;
 }
 function changeFs(p,d){
-  const cur=S[p].fs===0?autoFsCalc(p):S[p].fs;
+  const cur=S[p].fs===0?autoFs(p):S[p].fs;
   S[p].fs=Math.max(FS_MIN,Math.min(FS_MAX,cur+d));
-  fsUi(p); updateDragText(p); autoRender(p);
+  fsUi(p); updateDT(p); autoRender(p);
 }
 function fsClick(p,e){
-  const track=document.getElementById('fsTrack'+p);
-  const rect=track.getBoundingClientRect();
-  const pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+  const r=document.getElementById('fst'+p).getBoundingClientRect();
+  const pct=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
   S[p].fs=Math.round(FS_MIN+pct*(FS_MAX-FS_MIN));
-  fsUi(p); updateDragText(p); autoRender(p);
+  fsUi(p); updateDT(p); autoRender(p);
 }
-// slider drag
+// Slider drag (mouse + touch)
 [0,1].forEach(p=>{
-  const thumb=document.getElementById('fsThumb'+p);
-  let active=false,ox,op;
-  thumb.addEventListener('mousedown',e=>{
-    active=true; ox=e.clientX;
-    op=(S[p].fs===0?0:(S[p].fs-FS_MIN)/(FS_MAX-FS_MIN));
+  const th=document.getElementById('fsth'+p);
+  let act=false,ox,op;
+  const start=e=>{
+    act=true;
+    ox=e.touches?e.touches[0].clientX:e.clientX;
+    op=S[p].fs===0?0:(S[p].fs-FS_MIN)/(FS_MAX-FS_MIN);
     e.preventDefault();
-  });
-  thumb.addEventListener('touchstart',e=>{
-    active=true; ox=e.touches[0].clientX;
-    op=(S[p].fs===0?0:(S[p].fs-FS_MIN)/(FS_MAX-FS_MIN));
-    e.preventDefault();
-  },{passive:false});
-  document.addEventListener('mousemove',e=>{
-    if(!active) return;
-    const track=document.getElementById('fsTrack'+p);
-    const w=track.getBoundingClientRect().width;
-    const pct=Math.max(0,Math.min(1,op+(e.clientX-ox)/w));
+  };
+  const move=e=>{
+    if(!act)return;
+    const x=e.touches?e.touches[0].clientX:e.clientX;
+    const w=document.getElementById('fst'+p).getBoundingClientRect().width;
+    const pct=Math.max(0,Math.min(1,op+(x-ox)/w));
     S[p].fs=Math.round(FS_MIN+pct*(FS_MAX-FS_MIN));
-    fsUi(p); updateDragText(p); autoRender(p);
-  });
-  document.addEventListener('touchmove',e=>{
-    if(!active) return;
-    const track=document.getElementById('fsTrack'+p);
-    const w=track.getBoundingClientRect().width;
-    const pct=Math.max(0,Math.min(1,op+(e.touches[0].clientX-ox)/w));
-    S[p].fs=Math.round(FS_MIN+pct*(FS_MAX-FS_MIN));
-    fsUi(p); updateDragText(p); autoRender(p);
+    fsUi(p); updateDT(p); autoRender(p);
     e.preventDefault();
-  },{passive:false});
-  document.addEventListener('mouseup',()=>active=false);
-  document.addEventListener('touchend',()=>active=false);
+  };
+  const end=()=>act=false;
+  th.addEventListener('mousedown',start);th.addEventListener('touchstart',start,{passive:false});
+  document.addEventListener('mousemove',move);document.addEventListener('touchmove',move,{passive:false});
+  document.addEventListener('mouseup',end);document.addEventListener('touchend',end);
 });
 
-// ══════════════ AUTO FONT SIZE ══════════════
-function calcFs(ctx,text,maxW,maxH){
+// ════════════════════════════════════════
+//  AUTO FONT SIZE
+// ════════════════════════════════════════
+function calcFs(ctx,text,mw,mh){
   let lo=8,hi=200,best=10;
-  while(lo<=hi){
-    const m=(lo+hi)>>1;
-    ctx.font=`bold ${m}px 'Scheherazade New','Amiri',serif`;
-    if(ctx.measureText(text).width<=maxW && m<=maxH*0.82){best=m;lo=m+1}else hi=m-1;
-  }
+  while(lo<=hi){const m=(lo+hi)>>1;ctx.font=`bold ${m}px 'Scheherazade New','Amiri',serif`;if(ctx.measureText(text).width<=mw&&m<=mh*.82){best=m;lo=m+1}else hi=m-1;}
   return best;
 }
-function autoFsCalc(p){
-  const s=S[p]; const cv=s.cv; const ctx=cv.getContext('2d');
-  const name=s.nameEl.value.trim()||'اسم';
-  if(p===0){
-    const card=CARDS[s.sel];
-    return calcFs(ctx,name,card.nameW*card.w-6,card.nameH*card.h);
-  } else {
-    return Math.min(60, calcFs(ctx,name,cv.width*0.8,80));
-  }
+function autoFs(p){
+  const s=S[p],cv=s.cv,ctx=cv.getContext('2d'),name=s.n.value.trim()||'اسم';
+  if(p===0&&CARDS[s.sel]){const c=CARDS[s.sel];return calcFs(ctx,name,c.nameW*c.w-6,c.nameH*c.h);}
+  return Math.min(70,calcFs(ctx,name,cv.width*.8,80));
 }
 
-// ══════════════ POSITION ══════════════
+// ════════════════════════════════════════
+//  POSITION
+// ════════════════════════════════════════
 function resetPos(p){
-  const s=S[p];
-  if(p===0){
-    const card=CARDS[s.sel];
-    s.pos={xFrac:card.nameX, yFrac:card.nameY};
-  } else {
-    s.pos={xFrac:0.5, yFrac:0.5};
-  }
-  updateDragText(p);
+  if(p===0&&CARDS[S[p].sel]){const c=CARDS[S[p].sel];S[p].pos={x:c.nameX,y:c.nameY};}
+  else S[p].pos={x:.5,y:.65};
+  updateDT(p);
 }
 
-// ══════════════ DRAG TEXT ══════════════
-function updateDragText(p){
-  const s=S[p]; const dt=s.dt; const cv=s.cv;
-  if(!s.pos||cv.style.display==='none'||!s.nameEl.value.trim()){dt.style.display='none';return;}
-  const dw=cv.offsetWidth||cv.width, dh=cv.offsetHeight||cv.height;
+// ════════════════════════════════════════
+//  DRAG TEXT OVERLAY
+// ════════════════════════════════════════
+function updateDT(p){
+  const s=S[p],dt=s.dt,cv=s.cv;
+  if(!s.pos||cv.style.display==='none'||!s.n.value.trim()){dt.style.display='none';return;}
+  const dw=cv.offsetWidth||cv.width,dh=cv.offsetHeight||cv.height;
   const scale=cv.width/(cv.offsetWidth||cv.width);
-  const fs=(s.fs===0?autoFsCalc(p):s.fs)/scale;
+  const fs=(s.fs===0?autoFs(p):s.fs)/scale;
   dt.style.display='block';
-  dt.style.left=(s.pos.xFrac*dw)+'px';
-  dt.style.top=(s.pos.yFrac*dh)+'px';
-  dt.style.fontSize=fs+'px';
-  dt.style.fontFamily="'Scheherazade New','Amiri',serif";
-  dt.style.fontWeight='bold';
-  dt.style.color=s.clr;
-  dt.textContent=s.nameEl.value.trim();
-  // show hint
-  const h=s.hint; h.style.display='block';
-  clearTimeout(h._t); h._t=setTimeout(()=>h.style.display='none',3000);
+  dt.style.left=(s.pos.x*dw)+'px'; dt.style.top=(s.pos.y*dh)+'px';
+  dt.style.fontSize=fs+'px'; dt.style.fontFamily="'Scheherazade New','Amiri',serif";
+  dt.style.fontWeight='bold'; dt.style.color=s.clr;
+  dt.textContent=s.n.value.trim();
+  const dh2=s.dh;dh2.style.display='block';
+  clearTimeout(dh2._t);dh2._t=setTimeout(()=>dh2.style.display='none',2500);
 }
 
-// Drag events
+// Drag (mouse + touch)
 [0,1].forEach(p=>{
   const dt=S[p].dt;
-  let active=false,ox,oy,sl,st;
-  function getXY(e){return e.touches?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY}}
-  dt.addEventListener('mousedown',e=>{
-    active=true; const {x,y}=getXY(e);
-    ox=x; oy=y; sl=parseFloat(dt.style.left)||0; st=parseFloat(dt.style.top)||0;
-    dt.classList.add('dragging'); e.preventDefault();
-  });
-  dt.addEventListener('touchstart',e=>{
-    active=true; const {x,y}=getXY(e);
-    ox=x; oy=y; sl=parseFloat(dt.style.left)||0; st=parseFloat(dt.style.top)||0;
-    dt.classList.add('dragging'); e.preventDefault();
-  },{passive:false});
-  document.addEventListener('mousemove',e=>{
-    if(!active) return;
-    const {x,y}=getXY(e);
-    const cv=S[p].cv;
-    const dw=cv.offsetWidth, dh=cv.offsetHeight;
+  let act=false,ox,oy,sl,st;
+  const gxy=e=>e.touches?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY};
+  const start=e=>{
+    act=true;const {x,y}=gxy(e);ox=x;oy=y;
+    sl=parseFloat(dt.style.left)||0;st=parseFloat(dt.style.top)||0;
+    dt.classList.add('drag');e.preventDefault();
+  };
+  const move=e=>{
+    if(!act)return;
+    const {x,y}=gxy(e);
+    const cv=S[p].cv,dw=cv.offsetWidth,dh=cv.offsetHeight;
     const nx=Math.max(0,Math.min(dw,sl+(x-ox)));
     const ny=Math.max(0,Math.min(dh,st+(y-oy)));
-    dt.style.left=nx+'px'; dt.style.top=ny+'px';
-    S[p].pos={xFrac:nx/dw, yFrac:ny/dh};
-    autoRender(p);
-  });
-  document.addEventListener('touchmove',e=>{
-    if(!active) return;
-    const {x,y}=getXY(e);
-    const cv=S[p].cv;
-    const dw=cv.offsetWidth, dh=cv.offsetHeight;
-    const nx=Math.max(0,Math.min(dw,sl+(x-ox)));
-    const ny=Math.max(0,Math.min(dh,st+(y-oy)));
-    dt.style.left=nx+'px'; dt.style.top=ny+'px';
-    S[p].pos={xFrac:nx/dw, yFrac:ny/dh};
-    autoRender(p); e.preventDefault();
-  },{passive:false});
-  document.addEventListener('mouseup',()=>{active=false; dt.classList.remove('dragging')});
-  document.addEventListener('touchend',()=>{active=false; dt.classList.remove('dragging')});
+    dt.style.left=nx+'px';dt.style.top=ny+'px';
+    S[p].pos={x:nx/dw,y:ny/dh};
+    autoRender(p);e.preventDefault();
+  };
+  const end=()=>{act=false;dt.classList.remove('drag')};
+  dt.addEventListener('mousedown',start);dt.addEventListener('touchstart',start,{passive:false});
+  document.addEventListener('mousemove',move);document.addEventListener('touchmove',move,{passive:false});
+  document.addEventListener('mouseup',end);document.addEventListener('touchend',end);
 });
 
-// ══════════════ UPLOAD (panel 1) ══════════════
-function dragOv(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag-over')}
-function dragLv(e){document.getElementById('uploadZone').classList.remove('drag-over')}
-function dropImg(e){
-  e.preventDefault(); dragLv();
-  const f=e.dataTransfer.files[0];
-  if(f) readFile(f);
+// ════════════════════════════════════════
+//  IMAGE LOAD
+// ════════════════════════════════════════
+function loadImg(key){
+  return new Promise(res=>{
+    if(IMGS[key]){res(IMGS[key]);return;}
+    const i=new Image();
+    i.crossOrigin='anonymous'; // needed for GitHub raw images
+    i.onload=()=>{IMGS[key]=i;res(i)};
+    i.onerror=()=>res(null);
+    i.src=CARDS[key]?.src||key;
+  });
 }
-function loadUpload(e){ if(e.target.files[0]) readFile(e.target.files[0]); }
-function readFile(file){
+
+// ════════════════════════════════════════
+//  UPLOAD (panel 1)
+// ════════════════════════════════════════
+function dOv(e){e.preventDefault();document.getElementById('uz').classList.add('drag-over')}
+function dLv(){document.getElementById('uz').classList.remove('drag-over')}
+function dDrop(e){e.preventDefault();dLv();if(e.dataTransfer.files[0])readFile(e.dataTransfer.files[0])}
+function loadUp(e){if(e.target.files[0])readFile(e.target.files[0])}
+function readFile(f){
   const r=new FileReader();
   r.onload=ev=>{
     const img=new Image();
     img.onload=()=>{
-      S[1].uploadImg=img;
-      S[1].pos={xFrac:0.5,yFrac:0.5};
-      document.getElementById('uploadThumb').src=ev.target.result;
-      document.getElementById('uploadPlaceholder').style.display='none';
-      document.getElementById('uploadPreview').style.display='block';
-      S[1].prevTag.textContent='صورة مخصصة';
+      S[1].upImg=img;S[1].pos={x:.5,y:.65};
+      document.getElementById('uth').src=ev.target.result;
+      document.getElementById('uph').style.display='none';
+      document.getElementById('upv').style.display='block';
       autoRender(1);
     };
     img.src=ev.target.result;
   };
-  r.readAsDataURL(file);
+  r.readAsDataURL(f);
 }
-function removeUpload(e){
-  e.stopPropagation(); S[1].uploadImg=null;
-  document.getElementById('uploadPlaceholder').style.display='block';
-  document.getElementById('uploadPreview').style.display='none';
-  document.getElementById('imgFile').value='';
-  S[1].container.style.display='none';
-  S[1].ph.style.display='flex';
-  S[1].dt.style.display='none';
-  S[1].dlBtn.disabled=true;
+function removeUp(e){
+  e.stopPropagation();S[1].upImg=null;
+  document.getElementById('uph').style.display='block';
+  document.getElementById('upv').style.display='none';
+  document.getElementById('uf').value='';
+  S[1].cc.style.display='none';S[1].ph.style.display='flex';
+  S[1].dt.style.display='none';S[1].dl.disabled=true;
 }
 
-// ══════════════ IMAGE CACHE ══════════════
-const IMGS={};
-function loadImg(key){
-  return new Promise(res=>{
-    if(IMGS[key]){res(IMGS[key]);return}
-    const i=new Image(); i.onload=()=>{IMGS[key]=i;res(i)}; i.src=CARDS[key].src;
-  });
-}
-
-// ══════════════ TYPING ══════════════
+// ════════════════════════════════════════
+//  TYPING
+// ════════════════════════════════════════
 const _tt={};
-function onType(p){clearTimeout(_tt[p]); _tt[p]=setTimeout(()=>autoRender(p),300)}
+function onType(p){clearTimeout(_tt[p]);_tt[p]=setTimeout(()=>autoRender(p),300)}
 
-// ══════════════ RENDER (live — no text baked) ══════════════
+// ════════════════════════════════════════
+//  RENDER (live — text in overlay)
+// ════════════════════════════════════════
 function autoRender(p){
-  const s=S[p]; const name=s.nameEl.value.trim();
-  if(p===0){
-    loadImg(s.sel).then(img=>drawBase(p,img));
-  } else {
-    if(!s.uploadImg) return;
-    drawBase(p,s.uploadImg);
-  }
+  const s=S[p];
+  if(p===0)loadImg(s.sel).then(img=>{if(img)drawBase(p,img)});
+  else if(s.upImg)drawBase(p,s.upImg);
 }
 
 function drawBase(p,img){
-  const s=S[p]; const cv=s.cv; const ctx=cv.getContext('2d');
-  if(p===0){
-    const card=CARDS[s.sel]; cv.width=card.w; cv.height=card.h;
-    if(!s.pos) resetPos(p);
+  const s=S[p],cv=s.cv,ctx=cv.getContext('2d');
+  if(p===0&&CARDS[s.sel]){
+    const c=CARDS[s.sel];cv.width=c.w;cv.height=c.h;
   } else {
-    // Scale uploaded image to max 1200px wide
-    const maxW=1200;
-    const scale=Math.min(1,maxW/img.width);
-    cv.width=Math.round(img.width*scale); cv.height=Math.round(img.height*scale);
-    if(!s.pos) s.pos={xFrac:0.5,yFrac:0.5};
+    const mw=1200,sc=Math.min(1,mw/img.width);
+    cv.width=Math.round(img.width*sc);cv.height=Math.round(img.height*sc);
   }
   ctx.drawImage(img,0,0,cv.width,cv.height);
-  // Show canvas, hide placeholder
-  cv.style.display='block';
-  s.container.style.display='block';
-  s.ph.style.display='none';
-  s.dlBtn.disabled=false;
-  setTimeout(()=>updateDragText(p),30);
+  cv.style.display='block';s.cc.style.display='block';
+  s.ph.style.display='none';s.dl.disabled=false;
+  if(!s.pos)resetPos(p);
+  setTimeout(()=>updateDT(p),30);
 }
 
-// ══════════════ BAKE TEXT ══════════════
+// ════════════════════════════════════════
+//  BAKE TEXT (for download)
+// ════════════════════════════════════════
 function bakeText(p,ctx,w,h){
-  const s=S[p];
-  const name=s.nameEl.value.trim(); if(!name) return;
-  if(!s.pos) resetPos(p);
-  const px=s.pos.xFrac*w, py=s.pos.yFrac*h;
+  const s=S[p],name=s.n.value.trim();if(!name)return;
+  if(!s.pos)resetPos(p);
+  const px=s.pos.x*w,py=s.pos.y*h;
   let fs=s.fs;
-  if(fs===0 && p===0){
-    const card=CARDS[s.sel]; fs=calcFs(ctx,name,card.nameW*w-6,card.nameH*h);
-  } else if(fs===0){
-    fs=60;
-  }
+  if(fs===0&&p===0&&CARDS[s.sel]){const c=CARDS[s.sel];fs=calcFs(ctx,name,c.nameW*w-6,c.nameH*h);}
+  else if(fs===0)fs=60;
   ctx.save();
-  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillStyle=s.clr;
   ctx.font=`bold ${fs}px 'Scheherazade New','Amiri',serif`;
   ctx.fillText(name,px,py);
-  // AI message
   if(s.aiMsg){
-    const subY=py+fs*0.85;
-    if(subY<h-10){
-      const sfs=Math.min(fs*0.6,28);
-      ctx.globalAlpha=0.7;
-      ctx.font=`${sfs}px 'Amiri',serif`;
-      ctx.fillText(s.aiMsg,px,subY);
+    const sy=py+fs*.9;
+    if(sy<h-10){
+      ctx.globalAlpha=.68;
+      ctx.font=`${Math.min(fs*.58,26)}px 'Amiri',serif`;
+      ctx.fillText(s.aiMsg,px,sy);
     }
   }
   ctx.restore();
 }
 
-// ══════════════ MAKE FINAL ══════════════
+// ════════════════════════════════════════
+//  MAKE FINAL
+// ════════════════════════════════════════
 function makeFinal(p){
-  const s=S[p]; const name=s.nameEl.value.trim();
-  if(!name){
-    s.nameEl.classList.add('shake'); s.nameEl.focus();
-    setTimeout(()=>s.nameEl.classList.remove('shake'),400);
-    showToast('⚠️ الرجاء كتابة الاسم أولاً'); return;
-  }
-  if(p===1 && !s.uploadImg){showToast('⚠️ الرجاء رفع صورة أولاً'); return;}
-  // Draw with text baked
-  const draw=(img)=>{
-    const cv=s.cv; const ctx=cv.getContext('2d');
+  const s=S[p],name=s.n.value.trim();
+  if(!name){s.n.classList.add('shake');s.n.focus();setTimeout(()=>s.n.classList.remove('shake'),400);showToast('⚠️ اكتب الاسم أولاً');return;}
+  if(p===1&&!s.upImg){showToast('⚠️ ارفع صورة أولاً');return;}
+  const draw=img=>{
+    const cv=s.cv,ctx=cv.getContext('2d');
     ctx.drawImage(img,0,0,cv.width,cv.height);
     bakeText(p,ctx,cv.width,cv.height);
-    s.dt.style.display='none'; // hide overlay after bake
-    s.dlBtn.disabled=false;
-    sparkle(); showToast('✅ البطاقة جاهزة للتحميل!');
+    s.dt.style.display='none';s.dl.disabled=false;
+    sparkle();showToast('✅ البطاقة جاهزة للتحميل!');
   };
-  if(p===0) loadImg(s.sel).then(draw);
-  else draw(s.uploadImg);
+  if(p===0)loadImg(s.sel).then(img=>{if(img)draw(img)});
+  else draw(s.upImg);
 }
 
-// ══════════════ DOWNLOAD — THE FIX ══════════════
-// Key fix: create a fresh off-screen canvas, draw image + bake text there,
-// then export. This avoids any display-canvas contamination.
+// ════════════════════════════════════════
+//  DOWNLOAD (fixed: offscreen canvas + fonts.ready)
+// ════════════════════════════════════════
 function doDownload(p){
-  const s=S[p]; const name=s.nameEl.value.trim()||'بطاقة';
-  const doIt=(img)=>{
-    // Wait for fonts then render
-    const render=()=>{
+  const s=S[p],name=s.n.value.trim()||'بطاقة';
+  const run=img=>{
+    const go=()=>{
       const fc=document.createElement('canvas');
-      fc.width=s.cv.width; fc.height=s.cv.height;
+      fc.width=s.cv.width;fc.height=s.cv.height;
       const ctx=fc.getContext('2d');
       ctx.drawImage(img,0,0,fc.width,fc.height);
       bakeText(p,ctx,fc.width,fc.height);
-      // toDataURL on the OFFSCREEN canvas — no taint issues with data-URI images
-      const url=fc.toDataURL('image/png');
       const a=document.createElement('a');
-      a.href=url;
+      a.href=fc.toDataURL('image/png');
       a.download=`بطاقة-عيد-الفطر-${name}.png`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
       showToast('⬇ تم التحميل بنجاح!');
     };
-    // Ensure fonts loaded
-    if(fontsReady) render();
-    else document.fonts.ready.then(render);
+    fontsOk?go():document.fonts.ready.then(go);
   };
-  if(p===0) loadImg(s.sel).then(doIt);
-  else if(s.uploadImg) doIt(s.uploadImg);
+  if(p===0)loadImg(s.sel).then(img=>{if(img)run(img);else showToast('⚠️ تعذّر تحميل الصورة')});
+  else if(s.upImg)run(s.upImg);
   else showToast('⚠️ لا توجد صورة');
 }
 
-// ══════════════ CLAUDE AI ══════════════
+// ════════════════════════════════════════
+//  CLAUDE AI
+// ════════════════════════════════════════
 async function aiGen(p,rel){
-  const s=S[p]; const name=s.nameEl.value.trim();
-  const el=document.getElementById(p===0?'aiOut':'aiOut2');
-  s.aiMsg=''; el.style.display='flex'; el.className='';
-  el.innerHTML='<span style="color:var(--muted);font-size:.78rem;display:flex;align-items:center;gap:8px"><div class="dots"><span></span><span></span><span></span></div>Claude يكتب...</span>';
+  const s=S[p],name=s.n.value.trim();
+  const el=document.getElementById('ao'+p);
+  s.aiMsg='';el.style.display='flex';el.className='ai-out';
+  el.innerHTML='<span style="color:var(--mt);font-size:.76rem;display:flex;align-items:center;gap:7px"><div class="dots"><span></span><span></span><span></span></div>Claude يكتب...</span>';
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:70,
         messages:[{role:'user',content:`اكتب جملة تهنئة عيد الفطر قصيرة (5-7 كلمات) لـ${rel}${name?' اسمه '+name:''}. عربي فقط، مباشرة، بلا علامات اقتباس.`}]})
     });
-    const d=await r.json(); const msg=d.content?.[0]?.text?.trim()||'';
-    if(msg){
-      s.aiMsg=msg; el.style.display='block';
-      el.innerHTML=`<span style="color:var(--gold)">✦</span> ${msg}`;
-      autoRender(p);
-    }
-  }catch{
-    el.style.display='block';
-    el.innerHTML='<span style="color:rgba(255,120,120,.7);font-size:.74rem">تعذّر الاتصال</span>';
-  }
+    const d=await r.json();const msg=d.content?.[0]?.text?.trim()||'';
+    if(msg){s.aiMsg=msg;el.style.display='block';el.innerHTML=`<span style="color:var(--gold)">✦</span> ${msg}`;autoRender(p);}
+  }catch{el.style.display='block';el.innerHTML='<span style="color:rgba(255,120,120,.7);font-size:.73rem">تعذّر الاتصال</span>';}
 }
 
-// ══════════════ SPARKLE ══════════════
+// ════════════════════════════════════════
+//  SPARKLE
+// ════════════════════════════════════════
 function sparkle(){
-  const em=['✨','⭐','🌙','💛','🌟','✦','🎉','💫'];
-  for(let i=0;i<20;i++){
-    const el=document.createElement('div'); el.className='sp';
+  const em=['✨','⭐','🌙','💛','🌟','✦','💫'];
+  for(let i=0;i<18;i++){
+    const el=document.createElement('div');el.className='sp';
     el.textContent=em[~~(Math.random()*em.length)];
-    el.style.left=(8+Math.random()*84)+'vw'; el.style.top=(8+Math.random()*84)+'vh';
+    el.style.left=(8+Math.random()*84)+'vw';el.style.top=(8+Math.random()*84)+'vh';
     el.style.setProperty('--dx',(Math.random()*280-140)+'px');
     el.style.setProperty('--dy',(Math.random()*-280-60)+'px');
     el.style.setProperty('--rot',(Math.random()*360)+'deg');
     el.style.animationDelay=(Math.random()*.7)+'s';
-    document.body.appendChild(el); setTimeout(()=>el.remove(),2000);
+    document.body.appendChild(el);setTimeout(()=>el.remove(),2000);
   }
 }
 
-// ══════════════ TOAST ══════════════
+// ════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════
 let _toastT;
 function showToast(msg){
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
-  clearTimeout(_toastT); _toastT=setTimeout(()=>t.classList.remove('show'),2800);
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(_toastT);_toastT=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-// ══════════════ INIT ══════════════
-resetPos(0); resetPos(1);
-fsUi(0); fsUi(1);
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+buildGallery();
+resetPos(0);resetPos(1);
+fsUi(0);fsUi(1);
 loadImg(S[0].sel);
-window.addEventListener('resize',()=>{setTimeout(()=>{updateDragText(0);updateDragText(1)},60)});
+window.addEventListener('resize',()=>{setTimeout(()=>{updateDT(0);updateDT(1)},60)});
 </script>
 </body>
 </html>
+
