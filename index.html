@@ -484,7 +484,7 @@ const CARDS = {
 //  ← أضف صورك في مجلد "cards" بالـ Repository
 // ════════════════════════════════════════
 const GH_REPO = 'theevennts-coder/jpf';
-const GH_FOLDER = 'cards';
+const GH_FOLDER = 'images';
 const GH_RAW = `https://raw.githubusercontent.com/${GH_REPO}/main/${GH_FOLDER}/`;
 const GH_API = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FOLDER}`;
 
@@ -555,25 +555,56 @@ async function loadGithubCards(){
   const loadEl=document.getElementById('galLoading');
   loadEl.style.display='flex';
   try{
-    const res=await fetch(GH_API);
-    if(!res.ok) throw new Error('no folder');
-    const files=await res.json();
-    const imgs=files.filter(f=>/\.(jpg|jpeg|png|webp|gif)$/i.test(f.name));
-    if(imgs.length===0){loadEl.style.display='none';return;}
-    const g=document.getElementById('gal0');
-    imgs.forEach(f=>{
-      const rawUrl=GH_RAW+encodeURIComponent(f.name);
-      const label=f.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
-      const key='gh_'+f.name;
-      // Register in IMGS cache keyed by rawUrl
-      CARDS[key]={label,w:800,h:600,nameX:.5,nameY:.65,nameW:.7,nameH:.1,src:rawUrl,thumb:rawUrl,isDynamic:true};
-      g.appendChild(makeGT(key,label,rawUrl,true));
+    // Cache-bust with timestamp so new uploads appear immediately
+    const ts = Date.now();
+    const res = await fetch(GH_API + '?t=' + ts, {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if(!res.ok){
+      const errData = await res.json().catch(()=>({}));
+      if(res.status === 404){
+        // Folder doesn't exist — show friendly message
+        loadEl.innerHTML = '<span style="color:rgba(201,168,76,.35);font-size:.75rem">📂 لا توجد صور مضافة بعد — أضفها من لوحة التحكم</span>';
+        loadEl.style.display='flex';
+        return;
+      }
+      if(res.status === 403 || res.status === 429){
+        loadEl.innerHTML = '<span style="color:rgba(201,168,76,.35);font-size:.75rem">⏳ تجاوزت حد GitHub API — حاول بعد دقيقة</span>';
+        loadEl.style.display='flex';
+        return;
+      }
+      throw new Error(errData.message || 'HTTP ' + res.status);
+    }
+    const files = await res.json();
+    const imgs = files.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name));
+    if(imgs.length === 0){
+      loadEl.innerHTML = '<span style="color:rgba(201,168,76,.35);font-size:.75rem">📂 لا توجد صور في مجلد images — أضفها من لوحة التحكم</span>';
+      loadEl.style.display='flex';
+      return;
+    }
+    const g = document.getElementById('gal0');
+    // Remove existing gh cards to avoid duplicates on reload
+    g.querySelectorAll('.gt[data-gh]').forEach(el => el.remove());
+    imgs.forEach(f => {
+      const rawUrl = GH_RAW + encodeURIComponent(f.name);
+      const label = f.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      const key = 'gh_' + f.name;
+      CARDS[key] = {
+        label, w: 800, h: 600,
+        nameX: .5, nameY: .5,
+        nameW: .72, nameH: .12,
+        src: rawUrl, thumb: rawUrl, isDynamic: true
+      };
+      const el = makeGT(key, label, rawUrl, true);
+      el.dataset.gh = '1';
+      g.appendChild(el);
     });
     updateGalCount();
-  }catch(e){
-    // Folder doesn't exist yet — silently skip
-  }finally{
-    loadEl.style.display='none';
+    loadEl.style.display = 'none';
+  } catch(e) {
+    loadEl.innerHTML = '<span style="color:rgba(220,100,100,.6);font-size:.75rem">❌ خطأ في تحميل الصور: ' + e.message + '</span>';
+    loadEl.style.display = 'flex';
+    console.error('loadGithubCards error:', e);
   }
 }
 
@@ -913,4 +944,3 @@ window.addEventListener('resize',()=>{setTimeout(()=>{updateDT(0);updateDT(1)},6
 </script>
 </body>
 </html>
-
