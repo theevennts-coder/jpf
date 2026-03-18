@@ -237,10 +237,34 @@ input#phoneInput.ph-err{border-color:#e05555;animation:shk .35s ease}
 .ph-confirm:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
 .ph-privacy{font-size:.68rem;color:rgba(201,168,76,.3);text-align:center;margin-top:10px;line-height:1.5}
 
+
+/* ── Announce Banner ── */
+.announce-bar{
+  background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.1));
+  border-bottom:1px solid rgba(201,168,76,.3);
+  padding:9px 16px;text-align:center;
+  font-size:.82rem;color:var(--gl);
+  display:none;position:relative;
+  animation:slideDown .4s ease
+}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.announce-close{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--mt);cursor:pointer;font-size:16px;
+  line-height:1;padding:2px 6px
+}
+.announce-close:hover{color:var(--gl)}
+
 </style>
 </head>
 <body>
 <div class="page">
+
+<!-- Announce Banner (loaded from config.json) -->
+<div class="announce-bar" id="announceBar">
+  <span id="announceText"></span>
+  <button class="announce-close" onclick="this.parentElement.style.display='none'">✕</button>
+</div>
 
 <header class="hdr">
   <div class="hdr-pill"><span class="hdr-dot"></span>JPF · بطاقات التهنئة</div>
@@ -582,7 +606,11 @@ async function loadGithubCards(){
   try{
     // Cache-bust with timestamp so new uploads appear immediately
     const ts = Date.now();
-    const res = await fetch(GH_API + '?t=' + ts, {
+    // Use folder from config if overridden
+  const activeFolder = window._GH_FOLDER_OVERRIDE || GH_FOLDER;
+  const activeAPI = `https://api.github.com/repos/${GH_REPO}/contents/${activeFolder}`;
+  const activeRAW = `https://raw.githubusercontent.com/${GH_REPO}/main/${activeFolder}/`;
+  const res = await fetch(activeAPI + '?t=' + ts, {
       headers: { 'Accept': 'application/vnd.github.v3+json' }
     });
     if(!res.ok){
@@ -611,7 +639,7 @@ async function loadGithubCards(){
     // Remove existing gh cards to avoid duplicates on reload
     g.querySelectorAll('.gt[data-gh]').forEach(el => el.remove());
     imgs.forEach(f => {
-      const rawUrl = GH_RAW + encodeURIComponent(f.name);
+      const rawUrl = activeRAW + encodeURIComponent(f.name);
       const label = f.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
       const key = 'gh_' + f.name;
       CARDS[key] = {
@@ -1054,11 +1082,70 @@ function showToast(msg){
   clearTimeout(_toastT);_toastT=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
+
+// ════════════════════════════════════════
+//  CONFIG — reads config.json from GitHub
+// ════════════════════════════════════════
+const GH_REPO_CONFIG = 'theevennts-coder/jpf';
+
+async function loadConfig(){
+  try{
+    const ts = Date.now();
+    const r = await fetch(
+      `https://raw.githubusercontent.com/${GH_REPO_CONFIG}/main/config.json?t=${ts}`
+    );
+    if(!r.ok) return;
+    const cfg = await r.json();
+
+    // Apply title
+    if(cfg.title){
+      document.querySelector('h1').textContent = cfg.title;
+      document.title = cfg.title + ' · JPF';
+    }
+
+    // Apply subtitle
+    if(cfg.sub){
+      document.querySelector('.hdr-sub').textContent = cfg.sub;
+    }
+
+    // Apply images folder
+    if(cfg.folder){
+      // Update the GH_FOLDER variable used by loadGithubCards
+      window._GH_FOLDER_OVERRIDE = cfg.folder;
+    }
+
+    // Apply default text color
+    if(cfg.defaultColor){
+      // Update first color swatch to be selected with new default
+      S[0].clr = cfg.defaultColor;
+      S[1].clr = cfg.defaultColor;
+      // Update swatch UI - mark first matching swatch as on
+      document.querySelectorAll('.csw').forEach(sw=>{
+        if(sw.dataset.c === cfg.defaultColor){
+          sw.classList.add('on');
+        }
+      });
+    }
+
+    // Apply announce banner
+    if(cfg.announce && cfg.announce.trim()){
+      const bar = document.getElementById('announceBar');
+      document.getElementById('announceText').textContent = cfg.announce;
+      bar.style.display = 'block';
+    }
+
+  }catch(e){
+    // Config not found or invalid — silently skip, use defaults
+    console.log('Config not loaded:', e.message);
+  }
+}
+
 // ════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════
 buildGallery();
 resetPos(0);resetPos(1);
+loadConfig();
 fsUi(0);fsUi(1);
 loadImg(S[0].sel);
 window.addEventListener('resize',()=>{setTimeout(()=>{updateDT(0);updateDT(1)},60)});
