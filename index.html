@@ -212,6 +212,31 @@ input[type=text].shake{animation:shk .35s ease}
 /* ══ Sparkle ══ */
 .sp{position:fixed;pointer-events:none;z-index:9999;font-size:17px;animation:spanim 1.2s ease forwards}
 @keyframes spanim{from{opacity:1;transform:translate(0,0) scale(1) rotate(0)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0) rotate(var(--rot))}}
+
+/* ══ PHONE MODAL ══ */
+.ph-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.ph-modal-bg.on{display:flex}
+.ph-modal{background:linear-gradient(160deg,rgba(12,44,38,.98),rgba(8,28,24,.99));border:1px solid rgba(201,168,76,.25);border-radius:18px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.7);direction:rtl;animation:modalIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.ph-modal-ic{text-align:center;font-size:40px;margin-bottom:14px;filter:drop-shadow(0 0 16px rgba(201,168,76,.5))}
+.ph-modal-title{font-family:'Scheherazade New',serif;font-size:1.25rem;color:var(--gl);text-align:center;margin-bottom:6px}
+.ph-modal-sub{font-size:.78rem;color:var(--mt);text-align:center;line-height:1.7;margin-bottom:18px}
+.ph-modal-note{background:rgba(201,168,76,.08);border:1px dashed rgba(201,168,76,.25);border-radius:8px;padding:9px 13px;font-size:.75rem;color:rgba(240,208,128,.55);margin-bottom:16px;line-height:1.7;direction:ltr;text-align:right}
+.ph-modal-note strong{color:var(--gl)}
+.ph-input-wrap{position:relative;margin-bottom:6px}
+.ph-input-wrap .ph-flag{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
+input#phoneInput{width:100%;background:rgba(255,255,255,.05);border:1.5px solid var(--br);border-radius:var(--rs);padding:12px 44px 12px 14px;color:#fdf8ea;font-family:'Scheherazade New',serif;font-size:1.05rem;outline:none;transition:.2s;letter-spacing:1px;direction:ltr;text-align:right}
+input#phoneInput:focus{border-color:var(--gold);background:rgba(201,168,76,.07);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+input#phoneInput::placeholder{color:rgba(255,255,255,.2);letter-spacing:0}
+input#phoneInput.ph-err{border-color:#e05555;animation:shk .35s ease}
+.ph-err-msg{font-size:.73rem;color:#f08080;margin-bottom:10px;display:none;padding:0 4px}
+.ph-modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ph-skip{background:transparent;border:1.5px solid var(--br);color:var(--mt);border-radius:var(--rs);padding:12px;font-family:'Scheherazade New',serif;font-size:.9rem;cursor:pointer;transition:.2s}
+.ph-skip:hover{border-color:var(--brh);color:var(--tx)}
+.ph-confirm{background:linear-gradient(130deg,var(--gd),var(--gold) 50%,var(--gl));border:none;color:#1a0900;border-radius:var(--rs);padding:12px;font-family:'Scheherazade New',serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 4px 16px rgba(201,168,76,.28)}
+.ph-confirm:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
+.ph-privacy{font-size:.68rem;color:rgba(201,168,76,.3);text-align:center;margin-top:10px;line-height:1.5}
+
 </style>
 </head>
 <body>
@@ -866,26 +891,118 @@ function makeFinal(p){
 // ════════════════════════════════════════
 //  DOWNLOAD (fixed: offscreen canvas + fonts.ready)
 // ════════════════════════════════════════
+function // ══ Phone modal state ══
+let _phPanel=0, _phImg=null, _phName='';
+
 function doDownload(p){
-  const s=S[p],name=s.n.value.trim()||'بطاقة';
-  const run=img=>{
-    const go=()=>{
-      const fc=document.createElement('canvas');
-      fc.width=s.cv.width;fc.height=s.cv.height;
-      const ctx=fc.getContext('2d');
-      ctx.drawImage(img,0,0,fc.width,fc.height);
-      bakeText(p,ctx,fc.width,fc.height);
-      const a=document.createElement('a');
-      a.href=fc.toDataURL('image/png');
-      a.download=`بطاقة-عيد-الفطر-${name}.png`;
-      document.body.appendChild(a);a.click();document.body.removeChild(a);
-      showToast('⬇ تم التحميل بنجاح!');
-    };
-    fontsOk?go():document.fonts.ready.then(go);
+  const s=S[p];
+  _phName=s.n.value.trim()||'بطاقة';
+  _phPanel=p;
+  // Pre-load image before showing modal
+  if(p===0){
+    loadImg(s.sel).then(img=>{
+      if(!img){showToast('⚠️ تعذّر تحميل الصورة');return}
+      _phImg=img; openPhModal();
+    });
+  } else if(s.upImg){
+    _phImg=s.upImg; openPhModal();
+  } else {
+    showToast('⚠️ لا توجد صورة');
+  }
+}
+
+function openPhModal(){
+  document.getElementById('phoneInput').value='';
+  document.getElementById('phErrMsg').style.display='none';
+  document.getElementById('phoneInput').classList.remove('ph-err');
+  document.getElementById('phModalBg').classList.add('on');
+  setTimeout(()=>document.getElementById('phoneInput').focus(),200);
+}
+
+function phSkip(){
+  document.getElementById('phModalBg').classList.remove('on');
+  execDownload('', _phPanel, _phImg, _phName);
+}
+
+function phConfirm(){
+  const phone=document.getElementById('phoneInput').value.trim();
+  const errEl=document.getElementById('phErrMsg');
+  // Validate: must start with 05 and be 10 digits (note: not strict, just a hint)
+  if(phone && phone.length>0 && !/^05\d{8}$/.test(phone)){
+    document.getElementById('phoneInput').classList.add('ph-err');
+    errEl.style.display='block';
+    setTimeout(()=>document.getElementById('phoneInput').classList.remove('ph-err'),400);
+    return;
+  }
+  errEl.style.display='none';
+  document.getElementById('phModalBg').classList.remove('on');
+  execDownload(phone, _phPanel, _phImg, _phName);
+}
+
+// Close modal on background click
+document.getElementById('phModalBg')?.addEventListener('click',function(e){
+  if(e.target===this) phSkip();
+});
+
+function execDownload(phone, p, img, name){
+  const s=S[p];
+  const go=()=>{
+    const fc=document.createElement('canvas');
+    fc.width=s.cv.width;fc.height=s.cv.height;
+    const ctx=fc.getContext('2d');
+    ctx.drawImage(img,0,0,fc.width,fc.height);
+    bakeText(p,ctx,fc.width,fc.height);
+    const a=document.createElement('a');
+    a.href=fc.toDataURL('image/png');
+    a.download=`بطاقة-عيد-الفطر-${name}.png`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    showToast('⬇ تم التحميل بنجاح!');
+    // Save stats
+    saveDownloadStat(phone, name, p===0?S[0].sel:'custom', p===1);
   };
-  if(p===0)loadImg(s.sel).then(img=>{if(img)run(img);else showToast('⚠️ تعذّر تحميل الصورة')});
-  else if(s.upImg)run(s.upImg);
-  else showToast('⚠️ لا توجد صورة');
+  fontsOk?go():document.fonts.ready.then(go);
+}
+
+// ══ Stats: save to GitHub + localStorage ══
+function saveDownloadStat(phone, name, cardKey, isUpload){
+  const stat={
+    name, phone: phone||'—',
+    card: cardKey,
+    isUpload,
+    time: new Date().toISOString()
+  };
+  // Save to localStorage
+  const local=JSON.parse(localStorage.getItem('jpf_stats')||'[]');
+  local.unshift(stat);
+  if(local.length>500) local.length=500;
+  localStorage.setItem('jpf_stats', JSON.stringify(local));
+  // Try to save to GitHub using stored admin token
+  const token=localStorage.getItem('jpf_adm_token');
+  const repo=localStorage.getItem('jpf_adm_repo')||'theevennts-coder/jpf';
+  if(token) saveStatToGitHub(stat, token, repo);
+}
+
+async function saveStatToGitHub(stat, token, repo){
+  try{
+    // Read current stats file
+    let existing=[], sha=undefined;
+    const r=await fetch(`https://api.github.com/repos/${repo}/contents/data/stats.json`,{
+      headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(r.ok){
+      const d=await r.json();
+      sha=d.sha;
+      existing=JSON.parse(atob(d.content.replace(/\n/g,'')))||[];
+    }
+    existing.unshift(stat);
+    if(existing.length>1000) existing.length=1000;
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(existing,null,2))));
+    await fetch(`https://api.github.com/repos/${repo}/contents/data/stats.json`,{
+      method:'PUT',
+      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'📊 إضافة إحصاء تحميل',content,...(sha?{sha}:{})})
+    });
+  }catch{}
 }
 
 // ════════════════════════════════════════
@@ -942,5 +1059,31 @@ fsUi(0);fsUi(1);
 loadImg(S[0].sel);
 window.addEventListener('resize',()=>{setTimeout(()=>{updateDT(0);updateDT(1)},60)});
 </script>
+
+<!-- ══ PHONE MODAL ══ -->
+<div class="ph-modal-bg" id="phModalBg">
+  <div class="ph-modal">
+    <div class="ph-modal-ic">🎁</div>
+    <div class="ph-modal-title">بطاقتك جاهزة!</div>
+    <div class="ph-modal-sub">أدخل رقم جوالك لتحميل البطاقة<br>سيتم حفظه لأغراض الإحصاء فقط</div>
+    <div class="ph-modal-note">
+      <strong>ملاحظة:</strong> أدخل رقم جوالك السعودي<br>
+      مثال: <strong style="color:var(--gl);font-size:.85rem">0512345678</strong>
+    </div>
+    <div class="ph-input-wrap">
+      <span class="ph-flag">🇸🇦</span>
+      <input type="tel" id="phoneInput" placeholder="05xxxxxxxx" maxlength="10"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+        onkeydown="if(event.key==='Enter')phConfirm()">
+    </div>
+    <div class="ph-err-msg" id="phErrMsg">الرجاء إدخال رقم صحيح (05xxxxxxxxx)</div>
+    <div class="ph-modal-btns">
+      <button class="ph-skip" onclick="phSkip()">تخطي</button>
+      <button class="ph-confirm" onclick="phConfirm()">⬇ تحميل</button>
+    </div>
+    <div class="ph-privacy">🔒 رقمك محمي ولا يُشارك مع أي جهة خارجية</div>
+  </div>
+</div>
+
 </body>
 </html>
